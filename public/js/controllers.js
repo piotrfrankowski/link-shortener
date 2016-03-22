@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ls.controllers', []).
-	controller('mainCtrl', function ($scope, $http, linkUrl) {
+	controller('mainCtrl', function ($scope, $http, linkAddr) {
 		$scope.addr = '';
 		$scope.new_link = '';
 		$scope.err_msg = '';
@@ -11,7 +11,7 @@ angular.module('ls.controllers', []).
 			$http.post('/shorten', {link: $scope.addr})
 			.success(function(res) {
 				$scope.addr = '';
-				$scope.new_link = linkUrl + res.addr;
+				$scope.new_link = linkAddr.getUrl() + res.addr;
 			})
 			.error(function(err) {
 				$scope.err_msg = 'Error! ' + err;

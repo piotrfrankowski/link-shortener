@@ -5,6 +5,7 @@
 var express = require('express'),
   bodyParser = require('body-parser'),
   morgan = require('morgan'),
+  methodOverride = require('method-override'),
   http = require('http'),
   path = require('path');
 
@@ -22,6 +23,10 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride());
+app.use(logErrors);
+app.use(clientErrorHandler);
+app.use(errorHandler);
 
 /**
   * Here are stored our addresses
@@ -64,8 +69,6 @@ app.get('/link/:addr', function(req, res) {
 	res.redirect(links[index]);
 });
 
-
-// redirect all others to the index (HTML5 history)
 app.get('*', function(req, res){
 	res.render('index');
 });
@@ -78,3 +81,29 @@ app.get('*', function(req, res){
 http.createServer(app).listen(app.get('port'), function () {
   console.log('Server listening on port ' + app.get('port'));
 });
+
+/**
+  * Error handlers
+  */
+  
+function logErrors(err, req, res, next) {
+	console.error(err.stack);
+	next(err);
+};
+
+function clientErrorHandler(err, req, res, next) {
+	if (req.xhr) {
+		res.status(500).send({ error: 'Internal server Error!' });
+	} else {
+		next(err);
+	}
+};
+
+function errorHandler(err, req, res, next) {
+	if (res.headersSent) {
+		return next(err);
+	}
+  
+	res.status(500);
+	res.render('error', { error: err });
+};
