@@ -1,0 +1,14 @@
+{
+  "name": "link_shortener",
+  "description": "Simple URL shortening service",
+  "author": "Peter Frankowski",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.0.2",
+    "error-handler": "^0.1.4",
+    "express": "~4.1.1",
+    "ejs": "~2.4.1",
+    "morgan": "^1.0.0"
+  }
+}

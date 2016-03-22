@@ -1,0 +1,24 @@
+/* app stylesheet */
+
+.input {
+	border-right: 1px solid #EEEEEE;
+}
+
+.input input {
+	height: 34px;
+	margin-left: 5px;
+	width: calc(100% - 95px);
+}
+
+ .input button {
+	float: right;
+}
+
+.output i {
+	cursor: pointer;
+}
+
+.output p {
+	position: relative;
+	top: 7px;
+}
